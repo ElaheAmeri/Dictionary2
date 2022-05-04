@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dictionary2.R
 import com.example.dictionary2.dataBase.Word
 import com.example.dictionary2.databinding.FragmentHomeBinding
+import com.example.dictionary2.viewModel.DictionaryViewModel
 
 
 class HomeFragment : Fragment() {
@@ -18,7 +20,6 @@ class HomeFragment : Fragment() {
     val vmodel: DictionaryViewModel by viewModels()
     var binding: FragmentHomeBinding? = null
     var wordSearched: Word?=null
-    val dialog = FirstDialogFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -60,7 +61,7 @@ class HomeFragment : Fragment() {
     }
     fun checkExistWord(){
         if (wordSearched==null){
-            activity?.let { dialog.show(it.supportFragmentManager, "NoticeDialogFragment")}
+//            activity?.let { dialog.show(it.supportFragmentManager, "NoticeDialogFragment")}
         }
     }
 

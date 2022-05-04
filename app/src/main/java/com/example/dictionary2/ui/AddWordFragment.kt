@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.example.dictionary2.R
 import com.example.dictionary2.dataBase.Word
 import com.example.dictionary2.databinding.FragmentAddWordBinding
+import com.example.dictionary2.viewModel.DictionaryViewModel
 
 
 class AddWordFragment : Fragment() {
