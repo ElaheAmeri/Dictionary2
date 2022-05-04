@@ -1,7 +1,8 @@
-package com.example.dictionary2
+package com.example.dictionary2.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.dictionary2.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
