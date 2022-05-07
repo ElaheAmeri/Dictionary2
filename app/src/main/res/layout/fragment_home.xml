@@ -34,8 +34,7 @@
             android:layout_width="280dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:background="@color/white"
-            android:drawableEnd="@drawable/ic_baseline_cancel_24" />
+            android:background="@color/white"/>
 
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -63,58 +62,56 @@
     <LinearLayout
         android:id="@+id/linearLayoutShowResult"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <TextView
             android:id="@+id/tvWordShow"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@color/yello"
-            android:textSize="30dp"
-            android:layout_marginTop="150dp"
-            android:layout_height="wrap_content">
+            android:textSize="30dp">
 
         </TextView>
 
         <TextView
             android:id="@+id/tvWordMeanShow"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@color/yello"
-            android:textSize="30dp"
-            android:layout_marginTop="50dp"
-            android:layout_height="wrap_content">
+            android:textSize="30dp">
 
         </TextView>
 
         <TextView
             android:id="@+id/tvWordExampleShow"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@color/yello"
-            android:textSize="30dp"
-            android:layout_marginTop="50dp"
-            android:layout_height="wrap_content">
+            android:textSize="30dp">
 
         </TextView>
 
         <TextView
             android:id="@+id/tvWordSinonynShow"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@color/yello"
-            android:textSize="30dp"
-            android:layout_marginTop="50dp"
-            android:layout_height="wrap_content">
+            android:textSize="30dp">
 
         </TextView>
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

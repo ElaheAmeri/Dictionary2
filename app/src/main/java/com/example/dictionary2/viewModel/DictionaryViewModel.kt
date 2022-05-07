@@ -11,30 +11,34 @@ class DictionaryViewModel(app: Application): AndroidViewModel(app) {
     init {
 
         DictionaryRepository.initDB(app.applicationContext)
-        addWords(DictionaryRepository.wordList)
+        //addWords(DictionaryRepository.wordList)
     }
     fun addWord(word: Word){
         DictionaryRepository.insert(word)
     }
-    fun addWords(words:List<Word>){
 
-        DictionaryRepository.insertListOfWord(words)
+    fun searchWord(ENGWord:String):Int{
+        return DictionaryRepository.searchWord(ENGWord)
     }
-    fun search(string: String): Word {
-        var wordSearched: Word
-        wordSearched= DictionaryRepository.getWord(string)!!
-        return wordSearched
+
+    fun getWord(ENG:String): Word{
+        return DictionaryRepository.getWord(ENG)
     }
+
+//    fun addWords(words:List<Word>){
+//        DictionaryRepository.insertListOfWord(words)
+//    }
+
     fun getall():List<Word>{
         var wordList=listOf<Word>()
-        wordList= DictionaryRepository.getAllWord()!!
+        wordList= DictionaryRepository.getAllWord()
         return wordList
     }
 
 
     fun returnNumberOfWord():Int{
         var listWord= listOf<Word>()
-        listWord= DictionaryRepository.getAllWord()!!
+        listWord= DictionaryRepository.getAllWord()
         return listWord.lastIndex
     }
 }

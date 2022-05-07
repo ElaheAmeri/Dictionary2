@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dictionary2.R
 import com.example.dictionary2.dataBase.Word
@@ -17,9 +17,9 @@ import com.example.dictionary2.viewModel.DictionaryViewModel
 class HomeFragment : Fragment() {
 
 
-    val vmodel: DictionaryViewModel by viewModels()
-    var binding: FragmentHomeBinding? = null
-    var wordSearched: Word?=null
+    val vmodel: DictionaryViewModel by activityViewModels()
+    lateinit var binding: FragmentHomeBinding
+   // lateinit var wordSearched: Word
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,10 +28,10 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val view = binding!!.root
+        val view = binding.root
         return view
 
     }
@@ -41,28 +41,31 @@ class HomeFragment : Fragment() {
 
 
 //      go to add Fragment when btnAdd Clicked
-        binding!!.btnAdd.setOnClickListener {
+        binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addWordFragment)
         }
 
 
 //        search in word when btnSerch Clicked
-        binding!!.btnSearch.setOnClickListener {
-            var wordSearched: Word
-            wordSearched = vmodel.search(binding!!.editTextSearch.toString())
-            checkExistWord()
-            binding!!.linearLayoutShowResult.isVisible=true
-            binding!!.tvWordShow.setText(wordSearched.ENGWord)
-            binding!!.tvWordMeanShow.setText(wordSearched.persianWord)
-            binding!!.tvWordExampleShow.setText(wordSearched.example)
-            binding!!.tvWordSinonynShow.setText(wordSearched.synonyms)
+        binding.btnSearch.setOnClickListener {
+        if (vmodel.searchWord(binding.editTextSearch.text.toString()) != 0) {
+            var wordSearched=vmodel.getWord(binding.editTextSearch.text.toString())
+            binding.linearLayoutShowResult.visibility=View.VISIBLE
+            binding.tvWordShow.text = wordSearched.ENGWord
+            binding.tvWordMeanShow.text = wordSearched.persianWord
+            binding.tvWordExampleShow.setText(wordSearched.example)
+            binding.tvWordSinonynShow.setText(wordSearched.synonyms)
+        }
+
+           // checkExistWord()
+
 
         }
     }
     fun checkExistWord(){
-        if (wordSearched==null){
+      //  if (wordSearched==null){
 //            activity?.let { dialog.show(it.supportFragmentManager, "NoticeDialogFragment")}
-        }
+        //}
     }
 
 
