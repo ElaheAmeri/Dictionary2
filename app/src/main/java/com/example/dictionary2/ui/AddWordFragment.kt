@@ -36,12 +36,12 @@ class AddWordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnRegister.setOnClickListener {
             viewModel.addWord(Word(0,
-                    binding.editTextWord.toString()
-                    ,binding.editTextTextWordMeans.toString()
-                    ,binding.editTextExample.toString()
-                    ,binding.editTextSynonym.toString()))
+                    binding.editTextWord.text.toString()
+                    ,binding.editTextTextWordMeans.text.toString()
+                    ,binding.editTextExample.text.toString()
+                    ,binding.editTextSynonym.text.toString()))
 
-            Toast.makeText(activity,"Word added", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity,"Word added${viewModel.getWord(binding.editTextWord.text.toString())}", Toast.LENGTH_LONG).show()
         }
 
 
