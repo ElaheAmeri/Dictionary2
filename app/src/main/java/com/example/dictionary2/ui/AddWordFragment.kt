@@ -35,13 +35,13 @@ class AddWordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnRegister.setOnClickListener {
-            viewModel.addWord(Word(0,
+            addWord(Word(0,
                     binding.editTextWord.text.toString()
                     ,binding.editTextTextWordMeans.text.toString()
                     ,binding.editTextExample.text.toString()
                     ,binding.editTextSynonym.text.toString()))
 
-            Toast.makeText(activity,"Word added${viewModel.getWord(binding.editTextWord.text.toString())}", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity,"Word added", Toast.LENGTH_LONG).show()
         }
 
 
