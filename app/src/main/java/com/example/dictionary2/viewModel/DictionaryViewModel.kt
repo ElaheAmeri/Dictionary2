@@ -28,6 +28,9 @@ class DictionaryViewModel(app: Application): AndroidViewModel(app) {
 //    fun addWords(words:List<Word>){
 //        DictionaryRepository.insertListOfWord(words)
 //    }
+    fun deleteWord(word: Word){
+        DictionaryRepository.deletWord(word)
+    }
 
     fun getall():List<Word>{
         var wordList=listOf<Word>()
@@ -40,5 +43,9 @@ class DictionaryViewModel(app: Application): AndroidViewModel(app) {
         var listWord= listOf<Word>()
         listWord= DictionaryRepository.getAllWord()
         return listWord.lastIndex
+    }
+    fun buildWebSite(string: String) :String{
+       val siteAddress="https://fa.wikipedia.org/wiki/$string"
+        return siteAddress
     }
 }

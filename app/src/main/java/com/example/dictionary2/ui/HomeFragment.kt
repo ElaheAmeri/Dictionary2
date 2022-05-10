@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dictionary2.R
@@ -17,6 +19,7 @@ class HomeFragment : Fragment() {
 
     val vmodel: DictionaryViewModel by viewModels()
     lateinit var binding: FragmentHomeBinding
+    lateinit var myWebView:WebView
    // lateinit var wordSearched: Word
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,22 +52,18 @@ class HomeFragment : Fragment() {
         if (vmodel.searchWord(binding.editTextSearch.text.toString()) != 0) {
             var wordSearched=vmodel.getWord(binding.editTextSearch.text.toString())
             binding.linearLayoutShowResult.visibility=View.VISIBLE
-            binding.tvWordShow.text = wordSearched.ENGWord
-            binding.tvWordMeanShow.text = wordSearched.persianWord
+            binding.tvWordShow.setText(wordSearched.ENGWord)
+            binding.tvWordMeanShow.setText(wordSearched.persianWord)
             binding.tvWordExampleShow.setText(wordSearched.example)
             binding.tvWordSinonynShow.setText(wordSearched.synonyms)
         }
-
-           // checkExistWord()
-
-
+        else{
+                Toast.makeText(activity,"There is no searched word in the database",Toast.LENGTH_LONG)
+                    .show()
         }
+        }
+        binding.btnLink.setOnClickListener(){
+            binding.webView.loadUrl(vmodel.buildWebSite(binding.editTextSearch.text.toString()))}
     }
-    fun checkExistWord(){
-      //  if (wordSearched==null){
-//            activity?.let { dialog.show(it.supportFragmentManager, "NoticeDialogFragment")}
-        //}
-    }
-
 
 }
