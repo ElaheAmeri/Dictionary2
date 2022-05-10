@@ -1,0 +1,64 @@
+Index: app/src/main/java/com/example/dictionary2/dataBase/DictionaryDao.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.dictionary2.dataBase\r\n\r\nimport androidx.room.*\r\n\r\n@Dao\r\ninterface DictionaryDao {\r\n    @Insert\r\n    fun insertAll(vararg words :List<Word>)\r\n\r\n    @Insert(onConflict = OnConflictStrategy.REPLACE)\r\n    fun insert(word: Word)\r\n\r\n    @Delete\r\n    fun delet(word: Word)\r\n\r\n    @Update\r\n    fun update(word: Word)\r\n\r\n    @Query(\"SELECT * FROM Word WHERE ENGWord IN(:ENGWord) \")\r\n    fun getWord(ENGWord : String): Word\r\n\r\n    @Query(\"SELECT * FROM Word \")\r\n    fun getAllWord():List<Word>\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/dictionary2/dataBase/DictionaryDao.kt b/app/src/main/java/com/example/dictionary2/dataBase/DictionaryDao.kt
+--- a/app/src/main/java/com/example/dictionary2/dataBase/DictionaryDao.kt	
++++ b/app/src/main/java/com/example/dictionary2/dataBase/DictionaryDao.kt	
+@@ -16,9 +16,9 @@
+     @Update
+     fun update(word: Word)
+ 
+-    @Query("SELECT * FROM Word WHERE ENGWord IN(:ENGWord) ")
++    @Query("SELECT * FROM wordData WHERE ENGWord IN(:ENGWord) ")
+     fun getWord(ENGWord : String): Word
+ 
+-    @Query("SELECT * FROM Word ")
++    @Query("SELECT * FROM wordData ")
+     fun getAllWord():List<Word>
+ }
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_add_word.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".ui.AddWordFragment\">\r\n    <EditText\r\n        android:id=\"@+id/editTextWord\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_margin=\"16dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"word\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/editTextTextWordMeans\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:ems=\"10\"\r\n        android:layout_margin=\"16dp\"\r\n        android:hint=\"word Means\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/editTextExample\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:ems=\"10\"\r\n        android:hint=\"Example\"\r\n        android:layout_margin=\"16dp\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/editTextSynonym\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:ems=\"10\"\r\n        android:hint=\"Synonyms\"\r\n        android:layout_margin=\"16dp\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/btnRegister\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_margin=\"16dp\"\r\n        android:backgroundTint=\"@color/yello\"\r\n        android:textAllCaps=\"false\"\r\n        android:textSize=\"20dp\"\r\n        android:text=\"Register\" />\r\n\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_add_word.xml b/app/src/main/res/layout/fragment_add_word.xml
+--- a/app/src/main/res/layout/fragment_add_word.xml	
++++ b/app/src/main/res/layout/fragment_add_word.xml	
+@@ -6,12 +6,12 @@
+     android:orientation="vertical"
+     tools:context=".ui.AddWordFragment">
+     <EditText
+-        android:id="@+id/editTextWord"
++        android:id="@+id/editTextTextWord"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:layout_margin="16dp"
+         android:ems="10"
+-        android:hint="word" />
++        android:layout_margin="16dp"
++        android:hint="word Means" />
+ 
+     <EditText
+         android:id="@+id/editTextTextWordMeans"
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"GRADLE\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	
++++ b/.idea/gradle.xml	
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>

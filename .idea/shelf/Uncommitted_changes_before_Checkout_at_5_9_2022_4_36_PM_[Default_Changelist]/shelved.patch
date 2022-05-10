@@ -1,0 +1,405 @@
+Index: app/src/main/java/com/example/dictionary2/ui/AddWordFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.dictionary2.ui\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.Toast\r\nimport androidx.fragment.app.viewModels\r\nimport com.example.dictionary2.R\r\nimport com.example.dictionary2.dataBase.Word\r\nimport com.example.dictionary2.databinding.FragmentAddWordBinding\r\nimport com.example.dictionary2.viewModel.DictionaryViewModel\r\n\r\n\r\nclass AddWordFragment : Fragment() {\r\n\r\n\r\n    var binding : FragmentAddWordBinding?=null\r\n    val viewModel: DictionaryViewModel by viewModels()\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        binding = FragmentAddWordBinding.inflate(inflater,container,false)\r\n        val view = binding!!.root\r\n        return view\r\n    }\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        binding!!.btnRegister.setOnClickListener {\r\n            addWord(\r\n                Word(4,\r\n                    binding!!.editTextWord.toString()\r\n                    ,binding!!.editTextTextWordMeans.toString()\r\n                    ,binding!!.editTextExample.toString(),\r\n                    binding!!.editTextSynonym.toString())\r\n            )\r\n            Toast.makeText(activity,\"Word added\", Toast.LENGTH_LONG).show()\r\n        }\r\n\r\n\r\n    }\r\n    fun addWord(word: Word){\r\n        viewModel.addWord(word)\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/dictionary2/ui/AddWordFragment.kt b/app/src/main/java/com/example/dictionary2/ui/AddWordFragment.kt
+--- a/app/src/main/java/com/example/dictionary2/ui/AddWordFragment.kt	
++++ b/app/src/main/java/com/example/dictionary2/ui/AddWordFragment.kt	
+@@ -7,7 +7,6 @@
+ import android.view.ViewGroup
+ import android.widget.Toast
+ import androidx.fragment.app.viewModels
+-import com.example.dictionary2.R
+ import com.example.dictionary2.dataBase.Word
+ import com.example.dictionary2.databinding.FragmentAddWordBinding
+ import com.example.dictionary2.viewModel.DictionaryViewModel
+@@ -16,8 +15,8 @@
+ class AddWordFragment : Fragment() {
+ 
+ 
+-    var binding : FragmentAddWordBinding?=null
+-    val viewModel: DictionaryViewModel by viewModels()
++    lateinit var binding : FragmentAddWordBinding
++   val viewModel: DictionaryViewModel by viewModels()
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+@@ -27,30 +26,27 @@
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+-    ): View? {
++    ): View {
+         // Inflate the layout for this fragment
+         binding = FragmentAddWordBinding.inflate(inflater,container,false)
+-        val view = binding!!.root
++        val view = binding.root
+         return view
+     }
+     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+         super.onViewCreated(view, savedInstanceState)
+-        binding!!.btnRegister.setOnClickListener {
+-            addWord(
+-                Word(4,
+-                    binding!!.editTextWord.toString()
+-                    ,binding!!.editTextTextWordMeans.toString()
+-                    ,binding!!.editTextExample.toString(),
+-                    binding!!.editTextSynonym.toString())
++        binding.btnRegister.setOnClickListener {
++            viewModel.addWord(
++                Word(
++                   binding.editTextTextWord.toString()
++                    ,binding.editTextTextWordMeans.toString()
++                    ,binding.editTextExample.toString(),
++                    binding.editTextSynonym.toString())
+             )
+             Toast.makeText(activity,"Word added", Toast.LENGTH_LONG).show()
+         }
+ 
+ 
+     }
+-    fun addWord(word: Word){
+-        viewModel.addWord(word)
+-    }
+ 
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/dictionary2/ui/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.dictionary2.ui\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.core.view.isVisible\r\nimport androidx.fragment.app.viewModels\r\nimport androidx.navigation.fragment.findNavController\r\nimport com.example.dictionary2.R\r\nimport com.example.dictionary2.dataBase.Word\r\nimport com.example.dictionary2.databinding.FragmentHomeBinding\r\nimport com.example.dictionary2.viewModel.DictionaryViewModel\r\n\r\n\r\nclass HomeFragment : Fragment() {\r\n\r\n\r\n    val vmodel: DictionaryViewModel by viewModels()\r\n    var binding: FragmentHomeBinding? = null\r\n    var wordSearched: Word?=null\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        binding = FragmentHomeBinding.inflate(inflater, container, false)\r\n        val view = binding!!.root\r\n        return view\r\n\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n\r\n//      go to add Fragment when btnAdd Clicked\r\n        binding!!.btnAdd.setOnClickListener {\r\n            findNavController().navigate(R.id.action_homeFragment_to_addWordFragment)\r\n        }\r\n\r\n\r\n//        search in word when btnSerch Clicked\r\n        binding!!.btnSearch.setOnClickListener {\r\n            var wordSearched: Word\r\n            wordSearched = vmodel.search(binding!!.editTextSearch.toString())\r\n            checkExistWord()\r\n            binding!!.linearLayoutShowResult.isVisible=true\r\n            binding!!.tvWordShow.setText(wordSearched.ENGWord)\r\n            binding!!.tvWordMeanShow.setText(wordSearched.persianWord)\r\n            binding!!.tvWordExampleShow.setText(wordSearched.example)\r\n            binding!!.tvWordSinonynShow.setText(wordSearched.synonyms)\r\n\r\n        }\r\n    }\r\n    fun checkExistWord(){\r\n        if (wordSearched==null){\r\n//            activity?.let { dialog.show(it.supportFragmentManager, \"NoticeDialogFragment\")}\r\n        }\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/dictionary2/ui/HomeFragment.kt b/app/src/main/java/com/example/dictionary2/ui/HomeFragment.kt
+--- a/app/src/main/java/com/example/dictionary2/ui/HomeFragment.kt	
++++ b/app/src/main/java/com/example/dictionary2/ui/HomeFragment.kt	
+@@ -7,8 +7,10 @@
+ import android.view.ViewGroup
+ import androidx.core.view.isVisible
+ import androidx.fragment.app.viewModels
++
+ import androidx.navigation.fragment.findNavController
+ import com.example.dictionary2.R
++import com.example.dictionary2.dataBase.DictionaryRepository
+ import com.example.dictionary2.dataBase.Word
+ import com.example.dictionary2.databinding.FragmentHomeBinding
+ import com.example.dictionary2.viewModel.DictionaryViewModel
+@@ -16,9 +18,8 @@
+ 
+ class HomeFragment : Fragment() {
+ 
+-
+-    val vmodel: DictionaryViewModel by viewModels()
+-    var binding: FragmentHomeBinding? = null
++    private val vmodel: DictionaryViewModel by viewModels()
++    lateinit var binding: FragmentHomeBinding
+     var wordSearched: Word?=null
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+@@ -28,40 +29,44 @@
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+-    ): View? {
++    ): View {
+         // Inflate the layout for this fragment
+         binding = FragmentHomeBinding.inflate(inflater, container, false)
+-        val view = binding!!.root
++        val view = binding.root
+         return view
+ 
+     }
+ 
+     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+         super.onViewCreated(view, savedInstanceState)
+-
++       vmodel.addWords(DictionaryRepository.wordList)
+ 
+ //      go to add Fragment when btnAdd Clicked
+-        binding!!.btnAdd.setOnClickListener {
++        binding.btnAdd.setOnClickListener {
+             findNavController().navigate(R.id.action_homeFragment_to_addWordFragment)
+         }
+ 
+ 
+ //        search in word when btnSerch Clicked
+-        binding!!.btnSearch.setOnClickListener {
+-            var wordSearched: Word
+-            wordSearched = vmodel.search(binding!!.editTextSearch.toString())
++        binding.btnSearch.setOnClickListener {
+             checkExistWord()
+-            binding!!.linearLayoutShowResult.isVisible=true
+-            binding!!.tvWordShow.setText(wordSearched.ENGWord)
+-            binding!!.tvWordMeanShow.setText(wordSearched.persianWord)
+-            binding!!.tvWordExampleShow.setText(wordSearched.example)
+-            binding!!.tvWordSinonynShow.setText(wordSearched.synonyms)
+-
+         }
+     }
+-    fun checkExistWord(){
+-        if (wordSearched==null){
++//   Checks if the word entered by the user is in the database
++   fun checkExistWord(){
++        val wordSearched: Word
++        wordSearched = vmodel.search(binding.editTextSearch.toString())
++        if ( wordSearched==null){
++            binding.linearLayoutShowResult.isVisible=true
++          binding.tvWordExampleShow.setText("1")
+ //            activity?.let { dialog.show(it.supportFragmentManager, "NoticeDialogFragment")}
++        }else{
++           binding.linearLayoutShowResult.isVisible=true
++            binding.tvWordShow.setText(wordSearched.ENGWord)
++            binding.tvWordMeanShow.setText(wordSearched.persianWord)
++            binding.tvWordExampleShow.setText(wordSearched.example)
++            binding.tvWordSinonynShow.setText(wordSearched.synonyms)
++
+         }
+     }
+ 
+Index: app/src/main/java/com/example/dictionary2/viewModel/DictionaryViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.dictionary2.viewModel\r\n\r\nimport android.app.Application\r\nimport androidx.lifecycle.AndroidViewModel\r\nimport androidx.lifecycle.MutableLiveData\r\nimport com.example.dictionary2.dataBase.DictionaryRepository\r\nimport com.example.dictionary2.dataBase.Word\r\n\r\nclass DictionaryViewModel(app: Application): AndroidViewModel(app) {\r\n    val numberWord= MutableLiveData<Int>()\r\n    init {\r\n\r\n        DictionaryRepository.initDB(app.applicationContext)\r\n        addWords(DictionaryRepository.wordList)\r\n    }\r\n    fun addWord(word: Word){\r\n        DictionaryRepository.insert(word)\r\n    }\r\n    fun addWords(words:List<Word>){\r\n\r\n        DictionaryRepository.insertListOfWord(words)\r\n    }\r\n    fun search(string: String): Word {\r\n        var wordSearched: Word\r\n        wordSearched= DictionaryRepository.getWord(string)!!\r\n        return wordSearched\r\n    }\r\n    fun getall():List<Word>{\r\n        var wordList=listOf<Word>()\r\n        wordList= DictionaryRepository.getAllWord()!!\r\n        return wordList\r\n    }\r\n\r\n\r\n    fun returnNumberOfWord():Int{\r\n        var listWord= listOf<Word>()\r\n        listWord= DictionaryRepository.getAllWord()!!\r\n        return listWord.lastIndex\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/dictionary2/viewModel/DictionaryViewModel.kt b/app/src/main/java/com/example/dictionary2/viewModel/DictionaryViewModel.kt
+--- a/app/src/main/java/com/example/dictionary2/viewModel/DictionaryViewModel.kt	
++++ b/app/src/main/java/com/example/dictionary2/viewModel/DictionaryViewModel.kt	
+@@ -6,12 +6,10 @@
+ import com.example.dictionary2.dataBase.DictionaryRepository
+ import com.example.dictionary2.dataBase.Word
+ 
+-class DictionaryViewModel(app: Application): AndroidViewModel(app) {
++ class DictionaryViewModel constructor(val app: Application) : AndroidViewModel(app) {
+     val numberWord= MutableLiveData<Int>()
+     init {
+-
+         DictionaryRepository.initDB(app.applicationContext)
+-        addWords(DictionaryRepository.wordList)
+     }
+     fun addWord(word: Word){
+         DictionaryRepository.insert(word)
+@@ -21,20 +19,14 @@
+         DictionaryRepository.insertListOfWord(words)
+     }
+     fun search(string: String): Word {
+-        var wordSearched: Word
+-        wordSearched= DictionaryRepository.getWord(string)!!
++        val wordSearched: Word = DictionaryRepository.getWord(string)
+         return wordSearched
+     }
+-    fun getall():List<Word>{
+-        var wordList=listOf<Word>()
+-        wordList= DictionaryRepository.getAllWord()!!
+-        return wordList
+-    }
+-
+-
++     fun getall(): List<Word> {
++         return DictionaryRepository.getAllWord()
++     }
+     fun returnNumberOfWord():Int{
+-        var listWord= listOf<Word>()
+-        listWord= DictionaryRepository.getAllWord()!!
++        val listWord= DictionaryRepository.getAllWord()
+         return listWord.lastIndex
+     }
+ }
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n    id 'org.jetbrains.kotlin.android'\r\n    id 'kotlin-android'\r\n    id 'kotlin-kapt'\r\n}\r\n\r\nandroid {\r\n    compileSdk 31\r\n\r\n    defaultConfig {\r\n        applicationId \"com.example.dictionary2\"\r\n        minSdk 21\r\n        targetSdk 31\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = '1.8'\r\n    }\r\n    buildFeatures {\r\n        viewBinding = true\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\r\n    def lifecycle_version = \"2.5.0-alpha04\"\r\n    // com.example.dictionary.com.example.dictionary.DataBase.DataBase.DataBase.com.example.dictionary.DataBase.DataBase.DataBase.ViewModel\r\n\r\n    implementation(\"androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version\")\r\n//for using by viewModels()\r\n    implementation 'androidx.fragment:fragment-ktx:1.4.1'\r\n\r\n    def roomVersion = \"2.4.2\"\r\n\r\n    implementation(\"androidx.room:room-runtime:$roomVersion\")\r\n    annotationProcessor(\"androidx.room:room-compiler:$roomVersion\")\r\n\r\n    implementation 'androidx.core:core-ktx:1.7.0'\r\n    implementation 'androidx.appcompat:appcompat:1.4.1'\r\n    implementation 'com.google.android.material:material:1.5.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'\r\n    def fragment_version = \"1.4.1\"\r\n    // Kotlin\r\n    def nav_version = \"2.4.2\"\r\n    implementation(\"androidx.navigation:navigation-fragment-ktx:$nav_version\")\r\n    implementation(\"androidx.navigation:navigation-ui-ktx:$nav_version\")\r\n\r\n    implementation(\"androidx.fragment:fragment-ktx:$fragment_version\")\r\n    testImplementation 'junit:junit:4.13.2'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.3'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	
++++ b/app/build.gradle	
+@@ -40,16 +40,13 @@
+     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+     def lifecycle_version = "2.5.0-alpha04"
+     // com.example.dictionary.com.example.dictionary.DataBase.DataBase.DataBase.com.example.dictionary.DataBase.DataBase.DataBase.ViewModel
+-
++    //noinspection GradleDependency
+     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+ //for using by viewModels()
+     implementation 'androidx.fragment:fragment-ktx:1.4.1'
+-
+     def roomVersion = "2.4.2"
+-
+     implementation("androidx.room:room-runtime:$roomVersion")
+     annotationProcessor("androidx.room:room-compiler:$roomVersion")
+-
+     implementation 'androidx.core:core-ktx:1.7.0'
+     implementation 'androidx.appcompat:appcompat:1.4.1'
+     implementation 'com.google.android.material:material:1.5.0'
+Index: app/src/main/java/com/example/dictionary2/dataBase/Word.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.dictionary2.dataBase\r\n\r\nimport androidx.room.Entity\r\nimport androidx.room.PrimaryKey\r\n\r\n@Entity\r\ndata class Word(@PrimaryKey val id :Int,\r\n                val ENGWord :String,\r\n                val persianWord :String,\r\n                val example:String,\r\n                val synonyms :String){\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/dictionary2/dataBase/Word.kt b/app/src/main/java/com/example/dictionary2/dataBase/Word.kt
+--- a/app/src/main/java/com/example/dictionary2/dataBase/Word.kt	
++++ b/app/src/main/java/com/example/dictionary2/dataBase/Word.kt	
+@@ -1,12 +1,18 @@
+ package com.example.dictionary2.dataBase
+ 
++import androidx.room.ColumnInfo
+ import androidx.room.Entity
+ import androidx.room.PrimaryKey
+ 
+-@Entity
+-data class Word(@PrimaryKey val id :Int,
+-                val ENGWord :String,
+-                val persianWord :String,
+-                val example:String,
+-                val synonyms :String){
++@Entity (tableName = "wordData")
++data class Word(
++                @PrimaryKey(autoGenerate = true)
++                @ColumnInfo(name="ENGWord")
++                val ENGWord :String="",
++                @ColumnInfo(name = "persianWord")
++                val persianWord :String="",
++                @ColumnInfo(name = "example")
++                val example:String="",
++                @ColumnInfo(name = "synonyms")
++                val synonyms :String=""){
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/dictionary2/dataBase/AppDataBase.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.dictionary2.dataBase\r\n\r\nimport android.content.Context\r\nimport androidx.room.Database\r\nimport androidx.room.Room\r\nimport androidx.room.RoomDatabase\r\n\r\n@Database(entities = [Word::class],version = 1)\r\nabstract class AppDataBase() : RoomDatabase(){\r\n    abstract fun DictionaryDao(): DictionaryDao\r\n    companion object {\r\n        lateinit var INCTANCE : AppDataBase\r\n        fun getAppDatabase(context: Context): AppDataBase {\r\n            synchronized(AppDataBase::class) {\r\n                INCTANCE = Room.databaseBuilder(\r\n                    context.applicationContext,\r\n                    AppDataBase::class.java, \"DictionaryDB\"\r\n                )\r\n                    .allowMainThreadQueries()\r\n                    .build()\r\n            }\r\n            return INCTANCE\r\n        }\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/dictionary2/dataBase/AppDataBase.kt b/app/src/main/java/com/example/dictionary2/dataBase/AppDataBase.kt
+--- a/app/src/main/java/com/example/dictionary2/dataBase/AppDataBase.kt	
++++ b/app/src/main/java/com/example/dictionary2/dataBase/AppDataBase.kt	
+@@ -8,18 +8,22 @@
+ @Database(entities = [Word::class],version = 1)
+ abstract class AppDataBase() : RoomDatabase(){
+     abstract fun DictionaryDao(): DictionaryDao
+-    companion object {
+-        lateinit var INCTANCE : AppDataBase
+-        fun getAppDatabase(context: Context): AppDataBase {
+-            synchronized(AppDataBase::class) {
+-                INCTANCE = Room.databaseBuilder(
++    companion object{
++        var INCTANCE:AppDataBase?=null
++        fun getAppDataBase(context: Context):AppDataBase{
++            val _Inctance= INCTANCE
++            if (_Inctance!=null)
++                return _Inctance
++            synchronized(AppDataBase::class){
++                val inctance=Room.databaseBuilder(
+                     context.applicationContext,
+-                    AppDataBase::class.java, "DictionaryDB"
+-                )
+-                    .allowMainThreadQueries()
++                    AppDataBase::class.java,
++                    "myDB"
++                ).allowMainThreadQueries()
+                     .build()
++                INCTANCE=inctance
++                return inctance
+             }
+-            return INCTANCE
+         }
+ 
+     }
+Index: app/src/main/java/com/example/dictionary2/dataBase/DictionaryRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.dictionary2.dataBase\r\n\r\nimport android.content.Context\r\n\r\nobject DictionaryRepository {\r\n    lateinit var db: AppDataBase\r\n    lateinit var dao: DictionaryDao\r\n    var wordList= listOf<Word>(\r\n        Word( 1,\"Hello\",\"سلام\",\"Hello My friend\",\"Hi\"),\r\n        Word(2,\"Success\",\"موفقیت\",\"Success awaits you\",\"Smash\"),\r\n        Word(3,\"Dream\",\"رویا\",\"Don't Let Your Dream Be Dream\",\"Growing\")\r\n    )\r\n    fun initDB(context: Context){\r\n        db = AppDataBase.getAppDatabase(context)\r\n        dao = db.DictionaryDao()\r\n    }\r\n\r\n\r\n    fun getWord(ENG:String): Word?{\r\n        return dao?.getWord(ENG)\r\n    }\r\n    fun deletWord(word: Word){\r\n        dao?.delet(word)\r\n    }\r\n    fun updateTable(word: Word){\r\n        dao?.update(word)\r\n    }\r\n    fun getAllWord():List<Word>?{\r\n        return dao?.getAllWord()\r\n    }\r\n    fun insert(word: Word){\r\n        dao?.insert(word)\r\n    }\r\n    fun insertListOfWord(words:List<Word>){\r\n        dao?.insertAll(words)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/dictionary2/dataBase/DictionaryRepository.kt b/app/src/main/java/com/example/dictionary2/dataBase/DictionaryRepository.kt
+--- a/app/src/main/java/com/example/dictionary2/dataBase/DictionaryRepository.kt	
++++ b/app/src/main/java/com/example/dictionary2/dataBase/DictionaryRepository.kt	
+@@ -5,33 +5,40 @@
+ object DictionaryRepository {
+     lateinit var db: AppDataBase
+     lateinit var dao: DictionaryDao
+-    var wordList= listOf<Word>(
+-        Word( 1,"Hello","سلام","Hello My friend","Hi"),
+-        Word(2,"Success","موفقیت","Success awaits you","Smash"),
+-        Word(3,"Dream","رویا","Don't Let Your Dream Be Dream","Growing")
++    var wordList = listOf<Word>(
++        Word( "Hello", "سلام", "Hello My friend", "Hi"),
++        Word( "Success", "موفقیت", "Success awaits you", "Smash"),
++        Word( "Dream", "رویا", "Don't Let Your Dream Be Dream", "Growing")
+     )
++
+     fun initDB(context: Context){
+-        db = AppDataBase.getAppDatabase(context)
+-        dao = db.DictionaryDao()
++        db= AppDataBase.getAppDataBase(context)
++        dao=db.DictionaryDao()
++        addTestData()
+     }
+ 
+ 
+-    fun getWord(ENG:String): Word?{
+-        return dao?.getWord(ENG)
++    fun getWord(ENG:String): Word{
++        var resultWord:Word = dao.getWord(ENG)
++        return resultWord
+     }
+     fun deletWord(word: Word){
+-        dao?.delet(word)
++        dao.delet(word)
+     }
+     fun updateTable(word: Word){
+-        dao?.update(word)
++        dao.update(word)
+     }
+-    fun getAllWord():List<Word>?{
+-        return dao?.getAllWord()
++    fun getAllWord():List<Word>{
++        var listOfResultWord:List<Word> =dao.getAllWord()
++        return listOfResultWord
+     }
+     fun insert(word: Word){
+-        dao?.insert(word)
++        dao.insert(word)
+     }
+     fun insertListOfWord(words:List<Word>){
+-        dao?.insertAll(words)
++        dao.insertAll(words)
+     }
+-}
+\ No newline at end of file
++    fun addTestData(){
++        dao.insertAll(wordList)
++    }
++}
+Index: app/src/main/java/com/example/dictionary2/ui/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.dictionary2.ui\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport com.example.dictionary2.R\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_main)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/dictionary2/ui/MainActivity.kt b/app/src/main/java/com/example/dictionary2/ui/MainActivity.kt
+--- a/app/src/main/java/com/example/dictionary2/ui/MainActivity.kt	
++++ b/app/src/main/java/com/example/dictionary2/ui/MainActivity.kt	
+@@ -8,5 +8,6 @@
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         setContentView(R.layout.activity_main)
++
+     }
+ }
+\ No newline at end of file
