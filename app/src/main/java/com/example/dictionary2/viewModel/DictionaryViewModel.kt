@@ -44,7 +44,7 @@ class DictionaryViewModel(app: Application): AndroidViewModel(app) {
         listWord= DictionaryRepository.getAllWord()
         return listWord.lastIndex
     }
-    fun buildWebSite(string: String) :String{
+    fun buildWebSite(string: Word?) :String{
        val siteAddress="https://fa.wikipedia.org/wiki/$string"
         return siteAddress
     }

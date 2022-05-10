@@ -1,12 +1,14 @@
 package com.example.dictionary2.ui
 
 import android.os.Bundle
+import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dictionary2.R
@@ -50,20 +52,16 @@ class HomeFragment : Fragment() {
 //        search in word when btnSerch Clicked
         binding.btnSearch.setOnClickListener {
         if (vmodel.searchWord(binding.editTextSearch.text.toString()) != 0) {
-            var wordSearched=vmodel.getWord(binding.editTextSearch.text.toString())
-            binding.linearLayoutShowResult.visibility=View.VISIBLE
-            binding.tvWordShow.setText(wordSearched.ENGWord)
-            binding.tvWordMeanShow.setText(wordSearched.persianWord)
-            binding.tvWordExampleShow.setText(wordSearched.example)
-            binding.tvWordSinonynShow.setText(wordSearched.synonyms)
+            val bundle = bundleOf("word" to binding.editTextSearch.text.toString() )
+            findNavController().navigate(R.id.action_homeFragment_to_detailsFragment,bundle)
+
         }
         else{
                 Toast.makeText(activity,"There is no searched word in the database",Toast.LENGTH_LONG)
                     .show()
         }
         }
-        binding.btnLink.setOnClickListener(){
-            binding.webView.loadUrl(vmodel.buildWebSite(binding.editTextSearch.text.toString()))}
+
     }
 
 }
