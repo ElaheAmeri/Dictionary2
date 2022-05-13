@@ -12,7 +12,7 @@ interface DictionaryDao {
 
 
     @Query("SELECT id FROM Word WHERE ENGWord IN (:ENG)")
-    fun searchWord(ENG:String):Int
+    suspend fun searchWord(ENG:String):Int
 
     @Query("SELECT * FROM Word WHERE ENGWord IN(:ENGWord) ")
     fun getWord(ENGWord : String): Word
@@ -23,9 +23,6 @@ interface DictionaryDao {
 
     @Update
     fun update(word: Word)
-
-
-
 
     @Query("SELECT * FROM Word ")
     fun getAllWord():List<Word>
