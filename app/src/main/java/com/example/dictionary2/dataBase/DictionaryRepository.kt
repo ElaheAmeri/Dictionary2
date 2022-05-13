@@ -29,7 +29,7 @@ object DictionaryRepository {
     fun updateTable(word: Word){
         dao.update(word)
     }
-    fun getAllWord():List<Word>{
+    fun getAllWord():List<String>{
         return dao.getAllWord()
     }
     fun insert(word: Word){

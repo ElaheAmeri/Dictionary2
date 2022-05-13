@@ -1,5 +1,6 @@
 package com.example.dictionary2.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Layout
 import androidx.fragment.app.Fragment
@@ -12,6 +13,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dictionary2.R
+import com.example.dictionary2.adapter.DictionaryAdapter
+import com.example.dictionary2.dataBase.Word
 import com.example.dictionary2.databinding.FragmentHomeBinding
 import com.example.dictionary2.viewModel.DictionaryViewModel
 
@@ -39,8 +42,10 @@ class HomeFragment : Fragment() {
 
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRecycleViewList()
 
 
 //      go to add Fragment when btnAdd Clicked
@@ -60,8 +65,22 @@ class HomeFragment : Fragment() {
                 Toast.makeText(activity,"There is no searched word in the database",Toast.LENGTH_LONG)
                     .show()
         }
-        }
+}
+
+}
+    @SuppressLint("NotifyDataSetChanged")
+    fun initRecycleViewList(){
+        val adapter=DictionaryAdapter(listOf())
+        binding.rvHomePage.adapter=adapter
+        adapter.dataSet=vmodel.getall()
+        adapter.notifyDataSetChanged()
+        adapter.notifyItemInserted(0)
 
     }
 
-}
+
+
+
+    }
+
+

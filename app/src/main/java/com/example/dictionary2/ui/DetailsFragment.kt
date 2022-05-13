@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dictionary2.R
@@ -42,11 +43,14 @@ class DetailsFragment : Fragment() {
         binding.tvWordExampleShow.setText("word example : ${wordSearched?.example}")
         binding.tvWordSinonynShow.setText("word Sinonyn : ${wordSearched?.synonyms}")
         binding.btnLink.setOnClickListener(){
-            binding.webView.loadUrl(vmodel.buildWebSite(wordSearched))}
+                binding.webView.loadUrl(vmodel.buildWebSite(wordSearched))}
         binding.btnDelete.setOnClickListener(){
             if (wordSearched != null) {
                 vmodel.deleteWord(wordSearched)
                 findNavController().navigate(R.id.action_detailsFragment_to_homeFragment)
+            }
+            else{
+                Toast.makeText(activity,"Enter the desired word", Toast.LENGTH_LONG).show()
             }
         }
     }

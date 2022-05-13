@@ -27,6 +27,6 @@ interface DictionaryDao {
 
 
 
-    @Query("SELECT * FROM Word ")
-    fun getAllWord():List<Word>
+    @Query("SELECT ENGWord FROM Word ")
+    fun getAllWord():List<String>
 }

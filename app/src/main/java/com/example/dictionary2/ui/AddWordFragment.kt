@@ -46,8 +46,9 @@ class AddWordFragment : Fragment() {
 
 
     }
-    fun addWord(word: Word){
+    fun addWord(word: Word) {
         viewModel.addWord(word)
+
     }
 
 
